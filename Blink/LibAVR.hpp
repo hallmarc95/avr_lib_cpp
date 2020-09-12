@@ -20,18 +20,22 @@ namespace LibAVR {
         return reinterpret_cast<AddressType>(InAddress);
     };
     
-    template <RegisterAddress A>
+    struct RegBits_Base {
+        RegBits_Base(RegisterValue const InValue) : Value(InValue) {}
+        operator RegisterValue() const { return Value; }
+    private:
+        uint8_t const Value;
+    };
+    
+    template <class T, RegisterAddress A>
     struct AVRReg final {
-        RegisterValue operator =(RegisterValue InValue) const { return *_as_reg(A) = InValue; }
-        RegisterValue operator |=(RegisterValue InValue) const { return *_as_reg(A) |= InValue; }
-        RegisterValue operator &=(RegisterValue InValue) const { return *_as_reg(A) &= InValue; }
-        RegisterValue operator ^=(RegisterValue InValue) const { return *_as_reg(A) ^= InValue; }
-        RegisterValue operator ~() { return ~(*_as_reg(A)); }
+        T operator =(T InValue) const { return T(*_as_reg(A) = InValue); }
+        T operator |=(T InValue) const { return T(*_as_reg(A) |= InValue); }
+        T operator &=(T InValue) const { return T(*_as_reg(A) &= InValue); }
+        T operator ^=(T InValue) const { return T(*_as_reg(A) ^= InValue); }
+        T operator ~() const { return T(~(*_as_reg(A))); }
         
-        inline operator RegisterValue() const { return *(_as_reg(A)); }
-        
-        static RegisterValue _operator_assign(RegisterValue InValue) { return *_as_reg(A) = InValue; }
-        static RegisterValue _operator_xor_assign(RegisterValue InValue) { return *_as_reg(A) = InValue; }
+        inline operator T() const { return T(*_as_reg(A)); }
     };
     
 }
