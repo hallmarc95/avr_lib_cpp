@@ -38,7 +38,7 @@ namespace LibAVR {
         T operator ~() const { return T(~(*_as_reg(A))); }
         T operator &(T InValue) const { return T(*_as_reg(A) & InValue); }
         
-        inline operator T() const { return T(*_as_reg(A)); }
+        operator T() const { return T(*_as_reg(A)); }
     };
     
 }
