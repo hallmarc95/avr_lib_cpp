@@ -14,7 +14,7 @@
 
 
 /// Expands to define a value-type for a register. See PortB for expansion.
-#define DEF_REGBITS( N ) struct N : LibAVR::RegBits_Base {explicit N(volatile LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {}};
+#define DEF_REGBITS( N ) struct N : LibAVR::RegBits_Base { explicit N(volatile LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {} N operator ~() { return static_cast<N>(this->RegBits_Base::operator~()); }};
 
 namespace AVRIO {
     using BitOffset = uint8_t;
@@ -23,16 +23,26 @@ namespace AVRIO {
     // Template to perform mathmatical operations on register value-types
     
     template<class T>
-    T operator<<(int A, T B) { return T(A << int(B)); }
+    T operator <<(int A, T B) { return T(A << int(B)); }
+    
+    template<class T>
+    T operator |(int A, T B) { return T(A | int(B)); }
+    
+    template<class T>
+    T operator &(int A, T B) { return T(A & int(B)); }
     
     
     // Define register value-types
     
     struct PortB : LibAVR::RegBits_Base {
         explicit PortB(volatile LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {}
+        PortB operator ~() { return static_cast<PortB>(this->RegBits_Base::operator~()); }
     };
     DEF_REGBITS(PortC)
     DEF_REGBITS(PortD)
+    DEF_REGBITS(SPIControl)
+    DEF_REGBITS(SPIStatus)
+    DEF_REGBITS(SPIData)
     
     
     // Define hardware IO registers
@@ -49,6 +59,10 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<PortD,     ADDR_PIND>      PIND;
         constexpr LibAVR::AVRReg<PortD,     ADDR_DDRD>      DDRD;
         constexpr LibAVR::AVRReg<PortD,     ADDR_PORTD>     PORTD;
+        
+        constexpr LibAVR::AVRReg<SPIControl,ADDR_SPCR>      SPCR;
+        constexpr LibAVR::AVRReg<SPIStatus, ADDR_SPSR>      SPSR;
+        constexpr LibAVR::AVRReg<SPIData,   ADDR_SPDR>      SPDR;
     }
 }
 
@@ -81,6 +95,21 @@ namespace AVRIO {
 #define PD5 AVRIO::PortD(5)
 #define PD6 AVRIO::PortD(6)
 #define PD7 AVRIO::PortD(7)
+
+
+
+#define SPIE AVRIO::SPIControl(7)
+#define SPE  AVRIO::SPIControl(6)
+#define DORD AVRIO::SPIControl(5)
+#define MSTR AVRIO::SPIControl(4)
+#define CPOL AVRIO::SPIControl(3)
+#define CPHA AVRIO::SPIControl(2)
+#define SPR1 AVRIO::SPIControl(1)
+#define SPR0 AVRIO::SPIControl(0)
+
+#define SPIF AVRIO::SPIStatus(7)
+#define WCOL AVRIO::SPIStatus(6)
+#define SPI2X AVRIO::SPIStatus(0)
 
 
 #endif /* AVRIO_h */

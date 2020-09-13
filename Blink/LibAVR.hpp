@@ -23,6 +23,7 @@ namespace LibAVR {
     struct RegBits_Base {
         RegBits_Base(RegisterValue const InValue) : Value(InValue) {}
         operator RegisterValue() const { return Value; }
+        RegBits_Base operator ~() const { return ~Value; }
     private:
         uint8_t const Value;
     };
@@ -33,7 +34,9 @@ namespace LibAVR {
         T operator |=(T InValue) const { return T(*_as_reg(A) |= InValue); }
         T operator &=(T InValue) const { return T(*_as_reg(A) &= InValue); }
         T operator ^=(T InValue) const { return T(*_as_reg(A) ^= InValue); }
+        
         T operator ~() const { return T(~(*_as_reg(A))); }
+        T operator &(T InValue) const { return T(*_as_reg(A) & InValue); }
         
         inline operator T() const { return T(*_as_reg(A)); }
     };

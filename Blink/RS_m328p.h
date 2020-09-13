@@ -23,6 +23,10 @@ namespace IODef {
     constexpr int ADDR_DDRD     = 0x2A;
     constexpr int ADDR_PORTD    = 0x2B;
     
+    constexpr int ADDR_SPCR     = 0x4C;
+    constexpr int ADDR_SPSR     = 0x4D;
+    constexpr int ADDR_SPDR     = 0x4E;
+    
 }
 
 
