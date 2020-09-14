@@ -97,6 +97,18 @@ namespace AVRIO {
     DEF_REGBITS(ValueTCNT2)
     DEF_REGBITS(ValueOCR2A)
     DEF_REGBITS(ValueOCR2B)
+    DEF_REGBITS(ValueASSR)
+    DEF_REGBITS(ValueTWBR)
+    DEF_REGBITS(ValueTWSR)
+    DEF_REGBITS(ValueTWAR)
+    DEF_REGBITS(ValueTWDR)
+    DEF_REGBITS(ValueTWCR)
+    DEF_REGBITS(ValueTWAMR)
+    DEF_REGBITS(ValueUCSR0A)
+    DEF_REGBITS(ValueUCSR0B)
+    DEF_REGBITS(ValueUCSR0C)
+    DEF_REGBITS(ValueUBRR0)
+    DEF_REGBITS(ValueUDR0)
     
     // Define hardware IO registers
     
@@ -177,6 +189,19 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<ValueTCNT2, ADDR_TCNT2> TCNT2;
         constexpr LibAVR::AVRReg<ValueOCR2A, ADDR_OCR2A> OCR2A;
         constexpr LibAVR::AVRReg<ValueOCR2B, ADDR_OCR2B> OCR2B;
+        constexpr LibAVR::AVRReg<ValueASSR, ADDR_ASSR> ASSR;
+        constexpr LibAVR::AVRReg<ValueTWBR, ADDR_TWBR> TWBR;
+        constexpr LibAVR::AVRReg<ValueTWSR, ADDR_TWSR> TWSR;
+        constexpr LibAVR::AVRReg<ValueTWAR, ADDR_TWAR> TWAR;
+        constexpr LibAVR::AVRReg<ValueTWDR, ADDR_TWDR> TWDR;
+        constexpr LibAVR::AVRReg<ValueTWCR, ADDR_TWCR> TWCR;
+        constexpr LibAVR::AVRReg<ValueTWAMR, ADDR_TWAMR> TWAMR;
+        constexpr LibAVR::AVRReg<ValueUCSR0A, ADDR_UCSR0A> UCSR0A;
+        constexpr LibAVR::AVRReg<ValueUCSR0B, ADDR_UCSR0B> UCSR0B;
+        constexpr LibAVR::AVRReg<ValueUCSR0C, ADDR_UCSR0C> UCSR0C;
+        constexpr LibAVR::AVRReg<ValueUBRR0, ADDR_UBRR0L> UBRR0L;
+        constexpr LibAVR::AVRReg<ValueUBRR0, ADDR_UBRR0H> UBRR0H;
+        constexpr LibAVR::AVRReg<ValueUDR0, ADDR_UDR0> UDR0;
     }
 }
 
@@ -460,6 +485,76 @@ namespace AVRIO {
 #define WGM22 AVRIO::ValueTCCR2B(3)
 #define FOC2A AVRIO::ValueTCCR2B(6)
 #define FOC2B AVRIO::ValueTCCR2B(7)
+
+#define TCR2BUB AVRIO::ValueASSR(0)
+#define TCR2AUB AVRIO::ValueASSR(1)
+#define OCR2BUB AVRIO::ValueASSR(2)
+#define OCR2AUB AVRIO::ValueASSR(3)
+#define TCN2UB AVRIO::ValueASSR(4)
+#define AS2 AVRIO::ValueASSR(5)
+#define EXCLK AVRIO::ValueASSR(6)
+
+#define TWPS0 AVRIO::ValueTWSR(0)
+#define TWPS1 AVRIO::ValueTWSR(1)
+#define TWS3 AVRIO::ValueTWSR(3)
+#define TWS4 AVRIO::ValueTWSR(4)
+#define TWS5 AVRIO::ValueTWSR(5)
+#define TWS6 AVRIO::ValueTWSR(6)
+#define TWS7 AVRIO::ValueTWSR(7)
+
+#define TWGCE AVRIO::ValueTWAR(0)
+#define TWA0 AVRIO::ValueTWAR(1)
+#define TWA1 AVRIO::ValueTWAR(2)
+#define TWA2 AVRIO::ValueTWAR(3)
+#define TWA3 AVRIO::ValueTWAR(4)
+#define TWA4 AVRIO::ValueTWAR(5)
+#define TWA5 AVRIO::ValueTWAR(6)
+#define TWA6 AVRIO::ValueTWAR(7)
+
+#define TWIE AVRIO::ValueTWCR(0)
+#define TWEN AVRIO::ValueTWCR(2)
+#define TWWC AVRIO::ValueTWCR(3)
+#define TWSTO AVRIO::ValueTWCR(4)
+#define TWSTA AVRIO::ValueTWCR(5)
+#define TWEA AVRIO::ValueTWCR(6)
+#define TWINT AVRIO::ValueTWCR(7)
+
+#define TWAM0 AVRIO::ValueTWAMR(1)
+#define TWAM1 AVRIO::ValueTWAMR(2)
+#define TWAM2 AVRIO::ValueTWAMR(3)
+#define TWAM3 AVRIO::ValueTWAMR(4)
+#define TWAM4 AVRIO::ValueTWAMR(5)
+#define TWAM5 AVRIO::ValueTWAMR(6)
+#define TWAM6 AVRIO::ValueTWAMR(7)
+
+#define MPCM0 AVRIO::ValueUCSR0A(0)
+#define U2X0 AVRIO::ValueUCSR0A(1)
+#define UPE0 AVRIO::ValueUCSR0A(2)
+#define DOR0 AVRIO::ValueUCSR0A(3)
+#define FE0 AVRIO::ValueUCSR0A(4)
+#define UDRE0 AVRIO::ValueUCSR0A(5)
+#define TXC0 AVRIO::ValueUCSR0A(6)
+#define RXC0 AVRIO::ValueUCSR0A(7)
+
+#define TXB80 AVRIO::ValueUCSR0B(0)
+#define RXB80 AVRIO::ValueUCSR0B(1)
+#define UCSZ02 AVRIO::ValueUCSR0B(2)
+#define TXEN0 AVRIO::ValueUCSR0B(3)
+#define RXEN0 AVRIO::ValueUCSR0B(4)
+#define UDRIE0 AVRIO::ValueUCSR0B(5)
+#define TXCIE0 AVRIO::ValueUCSR0B(6)
+#define RXCIE0 AVRIO::ValueUCSR0B(7)
+
+#define UCPOL0 AVRIO::ValueUCSR0C(0)
+#define UCSZ00 AVRIO::ValueUCSR0C(1)
+#define UCSZ01 AVRIO::ValueUCSR0C(2)
+#define UCPHA0 AVRIO::ValueUCSR0C(1)    // Alternate name on bit
+#define UDORD0 AVRIO::ValueUCSR0C(2)    // Alternate name on bit
+#define USBS0 AVRIO::ValueUCSR0C(3)
+#define UPM00 AVRIO::ValueUCSR0C(4)
+#define UPM01 AVRIO::ValueUCSR0C(5)
+#define UMSEL00 AVRIO::ValueUCSR0C(6)
+#define UMSEL01 AVRIO::ValueUCSR0C(7)
 
 
 #endif /* AVRIO_h */

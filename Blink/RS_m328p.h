@@ -85,6 +85,19 @@ namespace IODef {
     constexpr int ADDR_TCNT2 = 0xB2;
     constexpr int ADDR_OCR2A = 0xB3;
     constexpr int ADDR_OCR2B = 0xB4;
+    constexpr int ADDR_ASSR = 0xB6;
+    constexpr int ADDR_TWBR = 0xB8;
+    constexpr int ADDR_TWSR = 0xB9;
+    constexpr int ADDR_TWAR = 0xBA;
+    constexpr int ADDR_TWDR = 0xBB;
+    constexpr int ADDR_TWCR = 0xBC;
+    constexpr int ADDR_TWAMR = 0xBD;
+    constexpr int ADDR_UCSR0A = 0xC0;
+    constexpr int ADDR_UCSR0B = 0xC1;
+    constexpr int ADDR_UCSR0C = 0xC2;
+    constexpr int ADDR_UBRR0L = 0xC4;
+    constexpr int ADDR_UBRR0H = 0xC5;
+    constexpr int ADDR_UDR0 = 0xC6;
     
 }
 
