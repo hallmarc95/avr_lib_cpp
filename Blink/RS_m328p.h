@@ -1,9 +1,7 @@
 //
 //  RS_m328p.h
-//  AVRIO
 //
 //  Created by Marcus Hall on 9/12/20.
-//  Copyright © 2020 Marcus Hall. All rights reserved.
 //
 
 #ifndef RS_m328p_h
@@ -32,7 +30,7 @@ namespace IODef {
     constexpr int ADDR_EECR = 0x3F;
     constexpr int ADDR_EEDR = 0X40;
     constexpr int ADDR_EEARL = 0x41;
-    constexpr int ADDR_EEARH = 0x42;
+//    constexpr int ADDR_EEARH = 0x42;  // atmega88P/168P only
     constexpr int ADDR_GTCCR = 0x43;
     constexpr int ADDR_TCCR0A = 0x44;
     constexpr int ADDR_TCCR0B = 0x45;
@@ -44,6 +42,14 @@ namespace IODef {
     constexpr int ADDR_SPCR = 0x4C;
     constexpr int ADDR_SPSR = 0x4D;
     constexpr int ADDR_SPDR = 0x4E;
+    constexpr int ADDR_ACSR = 0x50;
+    constexpr int ADDR_SMCR = 0x53;
+    constexpr int ADDR_MCUSR = 0x54;
+    constexpr int ADDR_MCUCR = 0x55;
+    constexpr int ADDR_SPMCSR = 0x57;
+    constexpr int ADDR_SPL = 0x5D;
+    constexpr int ADDR_SPH = 0x5E;
+    constexpr int ADDR_SREG = 0x5F;
     
 }
 

@@ -30,6 +30,8 @@ namespace LibAVR {
     
     template <class T, RegisterAddress A>
     struct AVRReg final {
+        typedef T ValueType;
+        
         T operator =(T InValue) const { return T(*_as_reg(A) = InValue); }
         T operator |=(T InValue) const { return T(*_as_reg(A) |= InValue); }
         T operator &=(T InValue) const { return T(*_as_reg(A) &= InValue); }
