@@ -67,7 +67,36 @@ namespace AVRIO {
     DEF_REGBITS(ValueSPL)
     DEF_REGBITS(ValueSPH)
     DEF_REGBITS(ValueSREG)
-    
+    DEF_REGBITS(ValueWDTCSR)
+    DEF_REGBITS(ValueCLKPR)
+    DEF_REGBITS(ValuePRR)
+    DEF_REGBITS(ValueOSCCAL)
+    DEF_REGBITS(ValuePCICR)
+    DEF_REGBITS(ValueEICRA)
+    DEF_REGBITS(ValuePCMSK0)
+    DEF_REGBITS(ValuePCMSK1)
+    DEF_REGBITS(ValuePCMSK2)
+    DEF_REGBITS(ValueTIMSK0)
+    DEF_REGBITS(ValueTIMSK1)
+    DEF_REGBITS(ValueTIMSK2)
+    DEF_REGBITS(ValueADC)
+    DEF_REGBITS(ValueADCSRA)
+    DEF_REGBITS(ValueADCSRB)
+    DEF_REGBITS(ValueADMUX)
+    DEF_REGBITS(ValueDIDR0)
+    DEF_REGBITS(ValueDIDR1)
+    DEF_REGBITS(ValueTCCR1A)
+    DEF_REGBITS(ValueTCCR1B)
+    DEF_REGBITS(ValueTCCR1C)
+    DEF_REGBITS(ValueTCNT1)
+    DEF_REGBITS(ValueICR1)
+    DEF_REGBITS(ValueOCR1A)
+    DEF_REGBITS(ValueOCR1B)
+    DEF_REGBITS(ValueTCCR2A)
+    DEF_REGBITS(ValueTCCR2B)
+    DEF_REGBITS(ValueTCNT2)
+    DEF_REGBITS(ValueOCR2A)
+    DEF_REGBITS(ValueOCR2B)
     
     // Define hardware IO registers
     
@@ -113,6 +142,41 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<ValueSPL, ADDR_SPL> SPL;
         constexpr LibAVR::AVRReg<ValueSPH, ADDR_SPH> SPH;
         constexpr LibAVR::AVRReg<ValueSREG, ADDR_SREG> SREG;
+        constexpr LibAVR::AVRReg<ValueWDTCSR, ADDR_WDTCSR> WDTCSR;
+        constexpr LibAVR::AVRReg<ValueCLKPR, ADDR_CLKPR> CLKPR;
+        constexpr LibAVR::AVRReg<ValuePRR, ADDR_PRR> PRR;
+        constexpr LibAVR::AVRReg<ValueOSCCAL, ADDR_OSCCAL> OSCCAL;
+        constexpr LibAVR::AVRReg<ValuePCICR, ADDR_PCICR> PCICR;
+        constexpr LibAVR::AVRReg<ValueEICRA, ADDR_EICRA> EICRA;
+        constexpr LibAVR::AVRReg<ValuePCMSK0, ADDR_PCMSK0> PCMSK0;
+        constexpr LibAVR::AVRReg<ValuePCMSK1, ADDR_PCMSK1> PCMSK1;
+        constexpr LibAVR::AVRReg<ValuePCMSK2, ADDR_PCMSK2> PCMSK2;
+        constexpr LibAVR::AVRReg<ValueTIMSK0, ADDR_TIMSK0> TIMSK0;
+        constexpr LibAVR::AVRReg<ValueTIMSK1, ADDR_TIMSK1> TIMSK1;
+        constexpr LibAVR::AVRReg<ValueTIMSK2, ADDR_TIMSK2> TIMSK2;
+        constexpr LibAVR::AVRReg<ValueADC, ADDR_ADCL> ADCL;
+        constexpr LibAVR::AVRReg<ValueADC, ADDR_ADCH> ADCH;
+        constexpr LibAVR::AVRReg<ValueADCSRA, ADDR_ADCSRA> ADCSRA;
+        constexpr LibAVR::AVRReg<ValueADCSRB, ADDR_ADCSRB> ADCSRB;
+        constexpr LibAVR::AVRReg<ValueADMUX, ADDR_ADMUX> ADMUX;
+        constexpr LibAVR::AVRReg<ValueDIDR0, ADDR_DIDR0> DIDR0;
+        constexpr LibAVR::AVRReg<ValueDIDR1, ADDR_DIDR1> DIDR1;
+        constexpr LibAVR::AVRReg<ValueTCCR1A, ADDR_TCCR1A> TCCR1A;
+        constexpr LibAVR::AVRReg<ValueTCCR1B, ADDR_TCCR1B> TCCR1B;
+        constexpr LibAVR::AVRReg<ValueTCCR1C, ADDR_TCCR1C> TCCR1C;
+        constexpr LibAVR::AVRReg<ValueTCNT1, ADDR_TCNT1L> TCNT1L;
+        constexpr LibAVR::AVRReg<ValueTCNT1, ADDR_TCNT1H> TCNT1H;
+        constexpr LibAVR::AVRReg<ValueICR1, ADDR_ICR1L> ICR1L;
+        constexpr LibAVR::AVRReg<ValueICR1, ADDR_ICR1H> ICR1H;
+        constexpr LibAVR::AVRReg<ValueOCR1A, ADDR_OCR1AL> OCR1AL;
+        constexpr LibAVR::AVRReg<ValueOCR1A, ADDR_OCR1AH> OCR1AH;
+        constexpr LibAVR::AVRReg<ValueOCR1B, ADDR_OCR1BL> OCR1BL;
+        constexpr LibAVR::AVRReg<ValueOCR1B, ADDR_OCR1BH> OCR1BH;
+        constexpr LibAVR::AVRReg<ValueTCCR2A, ADDR_TCCR2A> TCCR2A;
+        constexpr LibAVR::AVRReg<ValueTCCR2B, ADDR_TCCR2B> TCCR2B;
+        constexpr LibAVR::AVRReg<ValueTCNT2, ADDR_TCNT2> TCNT2;
+        constexpr LibAVR::AVRReg<ValueOCR2A, ADDR_OCR2A> OCR2A;
+        constexpr LibAVR::AVRReg<ValueOCR2B, ADDR_OCR2B> OCR2B;
     }
 }
 
@@ -261,6 +325,141 @@ namespace AVRIO {
 #define H_Bit AVRIO::ValueSREG(5)
 #define T_Bit AVRIO::ValueSREG(6)
 #define I_Bit AVRIO::ValueSREG(7)
+
+#define WDP0 AVRIO::ValueWDTCSR(0)
+#define WDP1 AVRIO::ValueWDTCSR(1)
+#define WDP2 AVRIO::ValueWDTCSR(2)
+#define WDE AVRIO::ValueWDTCSR(3)
+#define WDCE AVRIO::ValueWDTCSR(4)
+#define WDP3 AVRIO::ValueWDTCSR(5)
+#define WDIE AVRIO::ValueWDTCSR(6)
+#define WDIF AVRIO::ValueWDTCSR(7)
+
+#define CLKPS0 AVRIO::ValueCLKPR(0)
+#define CLKPS1 AVRIO::ValueCLKPR(1)
+#define CLKPS2 AVRIO::ValueCLKPR(2)
+#define CLKPS3 AVRIO::ValueCLKPR(3)
+#define CLKPCE AVRIO::ValueCLKPR(7)
+
+#define PRADC AVRIO::ValuePRR(0)
+#define PRUSART0 AVRIO::ValuePRR(1)
+#define PRSPI AVRIO::ValuePRR(2)
+#define PRTIM1 AVRIO::ValuePRR(3)
+#define PRTIM0 AVRIO::ValuePRR(5)
+#define PRTIM2 AVRIO::ValuePRR(6)
+#define PRTWI AVRIO::ValuePRR(7)
+
+#define PCIE0 AVRIO::ValuePCICR(0)
+#define PCIE1 AVRIO::ValuePCICR(1)
+#define PCIE2 AVRIO::ValuePCICR(2)
+
+#define ISC00 AVRIO::ValueEICRA(0)
+#define ISC01 AVRIO::ValueEICRA(1)
+#define ISC10 AVRIO::ValueEICRA(2)
+#define ISC11 AVRIO::ValueEICRA(3)
+
+#define PCINT0 AVRIO::ValuePCMSK0(0)
+#define PCINT1 AVRIO::ValuePCMSK0(1)
+#define PCINT2 AVRIO::ValuePCMSK0(2)
+#define PCINT3 AVRIO::ValuePCMSK0(3)
+#define PCINT4 AVRIO::ValuePCMSK0(4)
+#define PCINT5 AVRIO::ValuePCMSK0(5)
+#define PCINT6 AVRIO::ValuePCMSK0(6)
+#define PCINT7 AVRIO::ValuePCMSK0(7)
+
+#define PCINT8 AVRIO::ValuePCMSK1(0)
+#define PCINT9 AVRIO::ValuePCMSK1(1)
+#define PCINT10 AVRIO::ValuePCMSK1(2)
+#define PCINT11 AVRIO::ValuePCMSK1(3)
+#define PCINT12 AVRIO::ValuePCMSK1(4)
+#define PCINT13 AVRIO::ValuePCMSK1(5)
+#define PCINT14 AVRIO::ValuePCMSK1(6)
+
+#define PCINT16 AVRIO::ValuePCMSK2(0)
+#define PCINT17 AVRIO::ValuePCMSK2(1)
+#define PCINT18 AVRIO::ValuePCMSK2(2)
+#define PCINT19 AVRIO::ValuePCMSK2(3)
+#define PCINT20 AVRIO::ValuePCMSK2(4)
+#define PCINT21 AVRIO::ValuePCMSK2(5)
+#define PCINT22 AVRIO::ValuePCMSK2(6)
+#define PCINT23 AVRIO::ValuePCMSK2(7)
+
+#define TOIE0 AVRIO::ValueTIMSK0(0)
+#define OCIE0A AVRIO::ValueTIMSK0(1)
+#define OCIE0B AVRIO::ValueTIMSK0(2)
+
+#define TOIE1 AVRIO::ValueTIMSK1(0)
+#define OCIE1A AVRIO::ValueTIMSK1(1)
+#define OCIE1B AVRIO::ValueTIMSK1(2)
+#define ICIE1 AVRIO::ValueTIMSK1(3)
+
+#define TOIE2 AVRIO::ValueTIMSK2(0)
+#define OCIE2A AVRIO::ValueTIMSK2(1)
+#define OCIE2B AVRIO::ValueTIMSK2(2)
+
+#define ADPS0 AVRIO::ValueADCSRA(0)
+#define ADPS1 AVRIO::ValueADCSRA(1)
+#define ADPS2 AVRIO::ValueADCSRA(2)
+#define ADIE AVRIO::ValueADCSRA(3)
+#define ADIF AVRIO::ValueADCSRA(4)
+#define ADATE AVRIO::ValueADCSRA(5)
+#define ADSC AVRIO::ValueADCSRA(6)
+#define ADEN AVRIO::ValueADCSRA(7)
+
+#define ADTS0 AVRIO::ValueADCSRB(0)
+#define ADTS1 AVRIO::ValueADCSRB(1)
+#define ADTS2 AVRIO::ValueADCSRB(2)
+#define ACME AVRIO::ValueADCSRB(3)
+
+#define MUX0 AVRIO::ValueADMUX(0)
+#define MUX1 AVRIO::ValueADMUX(1)
+#define MUX2 AVRIO::ValueADMUX(2)
+#define MUX3 AVRIO::ValueADMUX(3)
+#define ADLAR AVRIO::ValueADMUX(5)
+#define REFS0 AVRIO::ValueADMUX(6)
+#define REFS1 AVRIO::ValueADMUX(7)
+
+#define ADC0D AVRIO::ValueDIDR0(0)
+#define ADC1D AVRIO::ValueDIDR0(1)
+#define ADC2D AVRIO::ValueDIDR0(2)
+#define ADC3D AVRIO::ValueDIDR0(3)
+#define ADC4D AVRIO::ValueDIDR0(4)
+#define ADC5D AVRIO::ValueDIDR0(5)
+
+#define AIN0D AVRIO::ValueDIDR1(0)
+#define AIN1D AVRIO::ValueDIDR1(1)
+
+#define WGM10 AVRIO::ValueTCCR1A(0)
+#define WGM11 AVRIO::ValueTCCR1A(1)
+#define COM1B0 AVRIO::ValueTCCR1A(4)
+#define COM1B1 AVRIO::ValueTCCR1A(5)
+#define COM1A0 AVRIO::ValueTCCR1A(6)
+#define COM1A1 AVRIO::ValueTCCR1A(7)
+
+#define CS10 AVRIO::ValueTCCR1B(0)
+#define CS11 AVRIO::ValueTCCR1B(1)
+#define CS12 AVRIO::ValueTCCR1B(2)
+#define WGM12 AVRIO::ValueTCCR1B(3)
+#define WGM13 AVRIO::ValueTCCR1B(4)
+#define ICES1 AVRIO::ValueTCCR1B(6)
+#define ICNC1 AVRIO::ValueTCCR1B(7)
+
+#define FOC1B AVRIO::ValueTCCR1C(6)
+#define FOC1A AVRIO::ValueTCCR1C(7)
+
+#define WGM20 AVRIO::ValueTCCR2A(0)
+#define WGM21 AVRIO::ValueTCCR2A(1)
+#define COM2B0 AVRIO::ValueTCCR2A(4)
+#define COM2B1 AVRIO::ValueTCCR2A(5)
+#define COM2A0 AVRIO::ValueTCCR2A(6)
+#define COM2A1 AVRIO::ValueTCCR2A(7)
+
+#define CS20 AVRIO::ValueTCCR2B(0)
+#define CS21 AVRIO::ValueTCCR2B(1)
+#define CS22 AVRIO::ValueTCCR2B(2)
+#define WGM22 AVRIO::ValueTCCR2B(3)
+#define FOC2A AVRIO::ValueTCCR2B(6)
+#define FOC2B AVRIO::ValueTCCR2B(7)
 
 
 #endif /* AVRIO_h */

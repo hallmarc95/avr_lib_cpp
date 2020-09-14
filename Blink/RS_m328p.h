@@ -50,6 +50,41 @@ namespace IODef {
     constexpr int ADDR_SPL = 0x5D;
     constexpr int ADDR_SPH = 0x5E;
     constexpr int ADDR_SREG = 0x5F;
+    constexpr int ADDR_WDTCSR = 0x60;
+    constexpr int ADDR_CLKPR = 0x61;
+    constexpr int ADDR_PRR = 0x64;
+    constexpr int ADDR_OSCCAL = 0x66;
+    constexpr int ADDR_PCICR = 0x68;
+    constexpr int ADDR_EICRA = 0x69;
+    constexpr int ADDR_PCMSK0 = 0x6B;
+    constexpr int ADDR_PCMSK1 = 0x6C;
+    constexpr int ADDR_PCMSK2 = 0x6D;
+    constexpr int ADDR_TIMSK0 = 0x6E;
+    constexpr int ADDR_TIMSK1 = 0x6F;
+    constexpr int ADDR_TIMSK2 = 0x70;
+    constexpr int ADDR_ADCL = 0x78;
+    constexpr int ADDR_ADCH = 0x79;
+    constexpr int ADDR_ADCSRA = 0x7A;
+    constexpr int ADDR_ADCSRB = 0x7B;
+    constexpr int ADDR_ADMUX = 0x7C;
+    constexpr int ADDR_DIDR0 = 0x7E;
+    constexpr int ADDR_DIDR1 = 0x7F;
+    constexpr int ADDR_TCCR1A = 0x80;
+    constexpr int ADDR_TCCR1B = 0x81;
+    constexpr int ADDR_TCCR1C = 0x82;
+    constexpr int ADDR_TCNT1L = 0x84;
+    constexpr int ADDR_TCNT1H = 0x85;
+    constexpr int ADDR_ICR1L = 0x86;
+    constexpr int ADDR_ICR1H = 0x87;
+    constexpr int ADDR_OCR1AL = 0x88;
+    constexpr int ADDR_OCR1AH = 0x89;
+    constexpr int ADDR_OCR1BL = 0x8A;
+    constexpr int ADDR_OCR1BH = 0x8B;
+    constexpr int ADDR_TCCR2A = 0xB0;
+    constexpr int ADDR_TCCR2B = 0xB1;
+    constexpr int ADDR_TCNT2 = 0xB2;
+    constexpr int ADDR_OCR2A = 0xB3;
+    constexpr int ADDR_OCR2B = 0xB4;
     
 }
 
