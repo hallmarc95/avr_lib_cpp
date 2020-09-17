@@ -14,7 +14,7 @@
 
 
 /// Expands to define a value-type for a register. See ValuePORTB for expansion.
-#define DEF_REGBITS( N ) struct N final : LibAVR::RegBits_Base { explicit N(volatile LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {} N operator ~() { return static_cast<N>(this->RegBits_Base::operator~()); }};
+#define DEF_REGBITS( N ) struct N final : LibAVR::RegBits_Base { explicit N(LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {} N operator ~() { return static_cast<N>(this->RegBits_Base::operator~()); }};
 
 namespace AVRIO {
     using BitOffset = uint8_t;
@@ -35,7 +35,7 @@ namespace AVRIO {
     // Define register value-types
     
     struct ValuePORTB final : LibAVR::RegBits_Base {
-        explicit ValuePORTB(volatile LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {}
+        explicit ValuePORTB(LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {}
         ValuePORTB operator ~() { return static_cast<ValuePORTB>(this->RegBits_Base::operator~()); }
     };
     DEF_REGBITS(ValuePORTC)
