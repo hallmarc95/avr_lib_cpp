@@ -18,16 +18,15 @@ namespace LibAVR {
     using AddressType = volatile uint8_t*;
     
     
-    auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
+    constexpr auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
         return reinterpret_cast<AddressType>(InAddress);
     };
     
     
     struct RegBits_Base {
-        RegBits_Base(RegisterValue const InValue) : Value(InValue) {}
-        RegBits_Base(RegBits_Base const Other) : Value(Other.Value) {}
-        operator RegisterValue() const { return Value; }
-        RegBits_Base operator ~() const { return ~Value; }
+        constexpr RegBits_Base(RegisterValue const InValue) : Value(InValue) {}
+        constexpr operator RegisterValue() const { return Value; }
+        constexpr RegBits_Base operator ~() const { return ~Value; }
     private:
         uint8_t const Value;
     };
@@ -39,30 +38,47 @@ namespace LibAVR {
         typedef T ValueType;
         static constexpr RegisterAddress Address = A;
         
-        T operator =(T InValue) const { return T(*_as_reg(A) = InValue); }
-        T operator |=(T InValue) const { return T(*_as_reg(A) |= InValue); }
-        T operator &=(T InValue) const { return T(*_as_reg(A) &= InValue); }
-        T operator ^=(T InValue) const { return T(*_as_reg(A) ^= InValue); }
+        constexpr T operator =(T const InValue) const { return T((*_as_reg(A)) = InValue); }
+        constexpr T operator |=(T const InValue) const { return T((*_as_reg(A)) |= InValue); }
+        constexpr T operator &=(T const InValue) const { return T((*_as_reg(A)) &= InValue); }
+        constexpr T operator ^=(T const InValue) const { return T((*_as_reg(A)) ^= InValue); }
         
-        T operator ~() const { return T(~(*_as_reg(A))); }
-        T operator &(T InValue) const { return T(*_as_reg(A) & InValue); }
+        constexpr T operator ~() const { return T(~((*_as_reg(A)))); }
+        constexpr T operator &(T InValue) const { return T((*_as_reg(A)) & InValue); }
         
-        operator T() const { return T(*_as_reg(A)); }
+        constexpr operator T() const { return T((*_as_reg(A))); }
         
-        void SetBit(T InBit) const {
-            (*this) |= (1 << InBit);
+        constexpr T SetBit(T InBit) const {
+            return T((*this) |= (1 << InBit));
         }
         
-        void ClearBit(T InBit) const {
-            (*this) &= ~(1 << InBit);
+        constexpr T ClearBit(T InBit) const {
+            return T((*this) &= ~(1 << InBit));
         }
         
-//        void SetBits(... InBits) const;
-//
+        constexpr T SetBits(T InBit_first) const { return T((*_as_reg(A)) |= InBit_first); }
+        constexpr T SetBits(T InBit_first, T InBit_second) const { return T((*_as_reg(A)) |= ((1 << InBit_first) | (1 << InBit_second))); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third)); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth)); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth)); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth)); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh)); }
+        constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh, T InBit_eighth) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh) | (1 << InBit_eighth)); }
+        
+        constexpr T ClearBits(T InBit_first) const { return T((*_as_reg(A)) &= ~( InBit_first) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second) const { return T((*_as_reg(A)) &= ~( ((1 << InBit_first) | (1 << InBit_second))) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third)) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth)) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth)) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth)) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh)) ); }
+        constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh, T InBit_eighth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh) | (1 << InBit_eighth)) ); }
+        
+
 //        void ClearBits(... InBits) const;
         
-        bool IsBitSet(T InBit) const {
-            return (*_as_reg(A)) & (1 << InBit);
+        constexpr bool IsBitSet(T InBit) const {
+            return ((*_as_reg(A))) & (1 << InBit);
         }
         
     };
