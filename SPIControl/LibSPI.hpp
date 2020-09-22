@@ -22,6 +22,7 @@ namespace LibSPI {
      */
     namespace Modules {
 
+#ifdef __HAVE_SPI__
         /**
          Hardware registers used to operate devices with a single SPI module.
          */
@@ -30,6 +31,7 @@ namespace LibSPI {
             static constexpr auto& _SR = AVRIO::SPSR;
             static constexpr auto& _DR = AVRIO::SPDR;
             static constexpr auto& _SSDDR = AVRIO::DDRB;
+            
             typedef decltype(AVRIO::SPDR)::ValueType _DT;
             
             static constexpr auto _SSPin = PB2;
@@ -56,6 +58,7 @@ namespace LibSPI {
             //  Then once you understand what's going on switch
             //  over to auto to avoid future headaches.
         };
+#endif
         
     }
     
@@ -260,7 +263,7 @@ namespace LibSPI {
         }
         
         bool IsTransactionCompleteFlagSet() const {
-            return M::_SR.IsBitSet(M::_SPIF);
+            return M::_SR.IsBitSet(M::_SPIF) == true;
         }
         
     };
