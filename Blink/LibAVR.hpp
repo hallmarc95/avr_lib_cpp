@@ -8,7 +8,6 @@
 #define LibAVR_hpp
 
 #include <stdio.h>
-//#include <stdarg.h>
 
 
 namespace LibAVR {
@@ -18,6 +17,7 @@ namespace LibAVR {
     using AddressType = volatile uint8_t*;
     
     
+    // Reinterpretation of a numerical value as an address in memory
     constexpr auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
         return reinterpret_cast<AddressType>(InAddress);
     };
@@ -56,6 +56,7 @@ namespace LibAVR {
             return T((*this) &= ~(1 << InBit));
         }
         
+        // SetBits is overloaded for between 1 and 8 bit-index parameters
         constexpr T SetBits(T InBit_first) const { return T((*_as_reg(A)) |= InBit_first); }
         constexpr T SetBits(T InBit_first, T InBit_second) const { return T((*_as_reg(A)) |= ((1 << InBit_first) | (1 << InBit_second))); }
         constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third)); }
@@ -65,6 +66,7 @@ namespace LibAVR {
         constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh)); }
         constexpr T SetBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh, T InBit_eighth) const { return T((*_as_reg(A)) |= (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh) | (1 << InBit_eighth)); }
         
+        // ClearBits is overloaded for between 1 and 8 bit-index parameters
         constexpr T ClearBits(T InBit_first) const { return T((*_as_reg(A)) &= ~( InBit_first) ); }
         constexpr T ClearBits(T InBit_first, T InBit_second) const { return T((*_as_reg(A)) &= ~( ((1 << InBit_first) | (1 << InBit_second))) ); }
         constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third)) ); }
@@ -73,9 +75,6 @@ namespace LibAVR {
         constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth)) ); }
         constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh)) ); }
         constexpr T ClearBits(T InBit_first, T InBit_second, T InBit_third, T InBit_fourth, T InBit_fifth, T InBit_sixth, T InBit_seventh, T InBit_eighth) const { return T((*_as_reg(A)) &= ~( (1 << InBit_first) | (1 << InBit_second) | (1 << InBit_third) | (1 << InBit_fourth) | (1 << InBit_fifth) | (1 << InBit_sixth) | (1 << InBit_seventh) | (1 << InBit_eighth)) ); }
-        
-
-//        void ClearBits(... InBits) const;
         
         constexpr bool IsBitSet(T InBit) const {
             return ((*_as_reg(A))) & (1 << InBit);
