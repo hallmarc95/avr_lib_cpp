@@ -141,7 +141,7 @@ auto operator-(reverse_iterator<Itr1> const& lhs, reverse_iterator<Itr2> const& 
 }
 
 
-namespace detail {
+namespace __detail {
 
 template <class InputIt>
 typename std::iterator_traits<InputIt>::difference_type __distance(InputIt first, InputIt last, std::input_iterator_tag) {
@@ -163,7 +163,7 @@ typename std::iterator_traits<InputIt>::difference_type __distance(InputIt first
 
 template <class InputIt>
 typename std::iterator_traits<InputIt>::difference_type distance(InputIt first, InputIt last) {
-    return std::detail::__distance(first, last, typename std::iterator_traits<InputIt>::iterator_category());
+    return std::__detail::__distance(first, last, typename std::iterator_traits<InputIt>::iterator_category());
 }
     
 }

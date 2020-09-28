@@ -7,8 +7,9 @@
 #ifndef Array_hpp
 #define Array_hpp
 
-#include <cstddef>
+#include <CStdDef.h>
 #include <Iterator.hpp>
+#include <Algorithm.hpp>
 
 
 namespace std {
@@ -234,25 +235,48 @@ typename std::Array<T, N>::iterator operator+(typename std::Array<T, N>::iterato
     return InItr + InValue;
 }
 
+template <class T, size_t N>
+bool operator==(std::Array<T, N> const& lhs, std::Array<T, N> const& rhs) {
+    for (size_t i = 0; i < N; i++) {
+        if (lhs[i] != rhs[i])
+            return false;
+    }
+    
+    return true;
 }
 
-template <class T, size_t N>
-bool operator==(std::Array<T, N> const& lhs, std::Array<T, N> const& rhs);
+template< class T, size_t N >
+bool operator!=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs ) {
+    for (size_t i = 0; i < N; i++) {
+        if (lhs[i] != rhs[i]) {
+            return true;
+        }
+    }
+    
+    return false;
+}
 
-template< class T, std::size_t N >
-bool operator!=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs );
+template< class T, size_t N >
+bool operator<(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs ) {
+    return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) && (lhs != rhs);
+}
 
-template< class T, std::size_t N >
-bool operator<(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs );
+template< class T, size_t N >
+bool operator<=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs ) {
+    return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) || (lhs == rhs);
+}
 
-template< class T, std::size_t N >
-bool operator<=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs );
+template< class T, size_t N >
+bool operator>(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs ) {
+    return !std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) && (lhs != rhs);
+}
 
-template< class T, std::size_t N >
-bool operator>(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs );
+template< class T, size_t N >
+bool operator>=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs ) {
+    return !std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) || (lhs == rhs);
+}
 
-template< class T, std::size_t N >
-bool operator>=(std::Array<T,N> const& lhs, std::Array<T,N> const& rhs );
+}
 
 
 #endif /* Array_hpp */
