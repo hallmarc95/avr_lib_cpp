@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <AVRIO.h>
-#include "Function.hpp"
+//#include "Function.hpp"
 
 namespace LibSPI {
     
@@ -58,7 +58,7 @@ namespace LibSPI {
             //  Then once you understand what's going on switch
             //  over to auto to avoid future headaches.
         };
-#endif
+#endif // __HAVE_SPI__
         
     }
     
@@ -101,42 +101,69 @@ namespace LibSPI {
     /**
      Generalized interface for operation of an SPI bus module.
      
-     Define symbol USE_SPI_DELEGATES to enable delegate handling functionality.
+     Define pre-processor symbol USE_SPI_DELEGATES to enable delegate handling functionality.
      */
     template <class M>
     class SPI final {
 #ifdef USE_SPI_DELEGATES
-        Function<void> AssertSS_delegate;
-        Function<void> ReleaseSS_delegate;
-        Function<void> WriteCollision_delegate;
+//        Function<void> AssertSS_delegate;
+//        Function<void> ReleaseSS_delegate;
+//        Function<void> WriteCollision_delegate;
+        void OnAssertSS();
+        void OnReleaseSS();
+        void OnWriteCollision();
+        
+        /*
+         Delegate function definitions must be provided if USE_SPI_DELEGATES is defined:
+         
+         template <>
+         void SPI<... Module used ...>::OnAssertSS() {
+            ... insert code here...
+         }
+         
+         template <>
+         void SPI<... Module used ...>::OnReleaseSS() {
+            ... insert code here ...
+         }
+         
+         template <>
+         void SPI<... Module used ...>::OnWriteCollision() {
+            ... insert code here ...
+         }
+         
+         */
         
     public:
         
-        void BindAssertSS(Function<void>::FType&& InFunc) {
-            AssertSS_delegate = InFunc;
-        }
-        
-        void BindReleaseSS(Function<void>::FType&& InFunc) {
-            ReleaseSS_delegate = InFunc;
-        }
-        
-        void BindWriteCollision(Function<void>::FType&& InFunc) {
-            WriteCollision_delegate = InFunc;
-        }
+//        void BindAssertSS(Function<void>::FType&& InFunc) {
+//            AssertSS_delegate = InFunc;
+//        }
+//
+//        void BindReleaseSS(Function<void>::FType&& InFunc) {
+//            ReleaseSS_delegate = InFunc;
+//        }
+//
+//        void BindWriteCollision(Function<void>::FType&& InFunc) {
+//            WriteCollision_delegate = InFunc;
+//        }
         
         void AssertSS() const {
-            if (AssertSS_delegate.IsValid() == true)
-                AssertSS_delegate();
+//            if (AssertSS_delegate.IsValid() == true)
+//                AssertSS_delegate();
+            OnAssertSS();
         }
         
         void ReleaseSS() const {
-            if (ReleaseSS_delegate.IsValid() == true)
-                ReleaseSS_delegate();
+//            if (ReleaseSS_delegate.IsValid() == true)
+//                ReleaseSS_delegate();
+            OnReleaseSS();
         }
         
-        void DoWriteCollisionCheck() const {
-            if (WriteCollision_delegate.IsValid() == true && IsWriteCollisionFlagSet() == true)
-                WriteCollision_delegate();
+        void DoCheckWriteCollision() const {
+//            if (WriteCollision_delegate.IsValid() == true && IsWriteCollisionFlagSet() == true)
+//                WriteCollision_delegate();
+            if (IsWriteCollisionFlagSet() == true)
+                OnWriteCollision();
         }
 #endif
         

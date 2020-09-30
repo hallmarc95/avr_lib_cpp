@@ -1,9 +1,26 @@
-//#define USE_SPI_DELEGATES
+#define USE_SPI_DELEGATES
 
 #include <stdio.h>
 #include "AVRIO.h"
 #include "LibSPI.hpp"
 #include <util/delay.h>
+
+
+template <>
+void LibSPI::SPI<LibSPI::Modules::SPISingle>::OnAssertSS() {
+    AVRIO::PORTB.ClearBit(PB0);
+}
+
+template <>
+void LibSPI::SPI<LibSPI::Modules::SPISingle>::OnReleaseSS() {
+    AVRIO::PORTB.SetBit(PB0);
+}
+
+template <>
+void LibSPI::SPI<LibSPI::Modules::SPISingle>::OnWriteCollision() {
+    return;
+}
+
 
 LibSPI::SPI<LibSPI::Modules::SPISingle> MySPI(LibSPI::SPIRole::Master);
 
