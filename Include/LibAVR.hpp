@@ -13,23 +13,40 @@
 namespace LibAVR {
 
     using RegisterAddress = int;
+
     using RegisterValue = uint8_t;
     using AddressType = volatile uint8_t*;
+
+    using RegisterValue_16 = uint16_t;
+    using AddressType_16 = volatile uint16_t*;
     
     
     // Reinterpretation of a numerical value as an address in memory
     constexpr auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
         return reinterpret_cast<AddressType>(InAddress);
     };
+    constexpr auto _as_reg_16 = [] (RegisterAddress_16 const InAddress) -> AddressType_16 {
+        return reinterpret_cast<AddressType_16>(InAddress);
+    }
     
     
     struct RegBits_Base {
         constexpr RegBits_Base(RegisterValue const InValue) : Value(InValue) {}
+        
         constexpr operator RegisterValue() const { return Value; }
         constexpr RegBits_Base operator ~() const { return ~Value; }
     private:
-        uint8_t const Value;
+        RegisterValue const Value;
     };
+
+    struct RegBits_16_Base {
+        constexpr RegBits_16_Base(RegisterValue_16 const InValue) : Value(InValue) {}
+        
+        constexpr operator RegisterValue_16() const { return Value; }
+        constexpr RegBits_16_Base operator ~() const { return ~Value; }
+    private:
+        RegisterValue_16 const Value;
+    }
     
     
     
@@ -80,10 +97,24 @@ namespace LibAVR {
             return ((*_as_reg(A))) & (1 << InBit);
         }
         
-    };
+    }; /* -- AVRReg */
     
-    
-    
+
+    template <class T, RegisterAddress const A>
+    struct AVRReg_16 final {
+        typedef T Value_Type;
+        static constexpr RegisterAddress Address = A;
+        
+        constexpr T operator =(T const InValue) const { return T((*_as_reg_16(A)) = InValue); }
+        constexpr T operator |=(T const InValue) const { return T((*_as_reg_16(A)) |= InValue); }
+        constexpr T operator &=(T const InValue) const { return T((*_as_reg_16(A)) &= InValue); }
+        constexpr T operator ^=(T const InValue) const { return T((*_as_reg_16(A)) ^= InValue); }
+        
+        constexpr T operator ~() const { return T(~((*_as_reg_16(A)))); }
+        constexpr T operator &(T InValue) const { return T((*_as_reg_16(A)) & InValue); }
+        
+        constexpr operator T() const { return T((*_as_reg_16(A))); }
+    }; /* -- AVRReg_16 */
     
 }
 
