@@ -18,6 +18,11 @@
 explicit constexpr N(LibAVR::RegisterValue InValue) : LibAVR::RegBits_Base(InValue) {} \
 constexpr N operator ~() const { return static_cast<N>(this->RegBits_Base::operator~()); }};
 
+/// Expands to define a value-type for a 16-bit composite register. See ValueTCNT1_16 for expansion.
+#define DEF_REGBITS_16( N ) struct N final : LibAVR::RegBits_16_Base { \
+explicit constexpr N(LibAVR::RegisterValue_16 InValue) : LibAVR::RegBits_16_Base(InValue) {} \
+constexpr N operator ~() const { return static_cast<N>(this->RegBits_16_Base::operator~()); }};
+
 namespace AVRIO {
     using BitOffset = uint8_t;
     
@@ -56,8 +61,7 @@ namespace AVRIO {
     DEF_REGBITS(ValueTCCR0A)
     DEF_REGBITS(ValueTCCR0B)
     DEF_REGBITS(ValueTCNT0)
-    DEF_REGBITS(ValueOCR0A)
-    DEF_REGBITS(ValueOCR0B)
+    DEF_REGBITS(ValueOCR0)
     DEF_REGBITS(ValueSPCR)
     DEF_REGBITS(ValueSPSR)
     DEF_REGBITS(ValueSPDR)
@@ -92,13 +96,11 @@ namespace AVRIO {
     DEF_REGBITS(ValueTCCR1C)
     DEF_REGBITS(ValueTCNT1)
     DEF_REGBITS(ValueICR1)
-    DEF_REGBITS(ValueOCR1A)
-    DEF_REGBITS(ValueOCR1B)
+    DEF_REGBITS(ValueOCR1)
     DEF_REGBITS(ValueTCCR2A)
     DEF_REGBITS(ValueTCCR2B)
     DEF_REGBITS(ValueTCNT2)
-    DEF_REGBITS(ValueOCR2A)
-    DEF_REGBITS(ValueOCR2B)
+    DEF_REGBITS(ValueOCR2)
     DEF_REGBITS(ValueASSR)
     DEF_REGBITS(ValueTWBR)
     DEF_REGBITS(ValueTWSR)
@@ -111,7 +113,19 @@ namespace AVRIO {
     DEF_REGBITS(ValueUCSR0C)
     DEF_REGBITS(ValueUBRR0)
     DEF_REGBITS(ValueUDR0)
+
+    // Define 16-bit composite register value-types
     
+    DEF_REGBITS_16(ValueEEAR_16)
+    DEF_REGBITS_16(ValueADC_16)
+    struct ValueTCNT1_16 final : LibAVR::RegBits_16_Base {
+        explicit constexpr ValueTCNT1_16(LibAVR::RegisterValue_16 InValue) : LibAVR::RegBits_16_Base(InValue) {}
+        constexpr ValueTCNT1_16 operator ~() const { return static_cast<ValueTCNT1_16>(this->RegBits_16_Base::operator~()); }
+    };
+    DEF_REGBITS_16(ValueICR1_16)
+    DEF_REGBITS_16(ValueOCR1_16)
+    DEF_REGBITS_16(ValueUBRR0_16)
+
     // Define hardware IO registers
     
     namespace {
@@ -141,8 +155,8 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<ValueTCCR0A, ADDR_TCCR0A> TCCR0A;
         constexpr LibAVR::AVRReg<ValueTCCR0B, ADDR_TCCR0B> TCCR0B;
         constexpr LibAVR::AVRReg<ValueTCNT0, ADDR_TCNT0> TCNT0;
-        constexpr LibAVR::AVRReg<ValueOCR0A, ADDR_OCR0A> OCR0A;
-        constexpr LibAVR::AVRReg<ValueOCR0B, ADDR_OCR0B> OCR0B;
+        constexpr LibAVR::AVRReg<ValueOCR0, ADDR_OCR0A> OCR0A;
+        constexpr LibAVR::AVRReg<ValueOCR0, ADDR_OCR0B> OCR0B;
         constexpr LibAVR::AVRReg<ValueGPIO, ADDR_GPIOR1> GPIOR1;
         constexpr LibAVR::AVRReg<ValueGPIO, ADDR_GPIOR2> GPIOR2;
         constexpr LibAVR::AVRReg<ValueSPCR, ADDR_SPCR> SPCR;
@@ -182,15 +196,15 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<ValueTCNT1, ADDR_TCNT1H> TCNT1H;
         constexpr LibAVR::AVRReg<ValueICR1, ADDR_ICR1L> ICR1L;
         constexpr LibAVR::AVRReg<ValueICR1, ADDR_ICR1H> ICR1H;
-        constexpr LibAVR::AVRReg<ValueOCR1A, ADDR_OCR1AL> OCR1AL;
-        constexpr LibAVR::AVRReg<ValueOCR1A, ADDR_OCR1AH> OCR1AH;
-        constexpr LibAVR::AVRReg<ValueOCR1B, ADDR_OCR1BL> OCR1BL;
-        constexpr LibAVR::AVRReg<ValueOCR1B, ADDR_OCR1BH> OCR1BH;
+        constexpr LibAVR::AVRReg<ValueOCR1, ADDR_OCR1AL> OCR1AL;
+        constexpr LibAVR::AVRReg<ValueOCR1, ADDR_OCR1AH> OCR1AH;
+        constexpr LibAVR::AVRReg<ValueOCR1, ADDR_OCR1BL> OCR1BL;
+        constexpr LibAVR::AVRReg<ValueOCR1, ADDR_OCR1BH> OCR1BH;
         constexpr LibAVR::AVRReg<ValueTCCR2A, ADDR_TCCR2A> TCCR2A;
         constexpr LibAVR::AVRReg<ValueTCCR2B, ADDR_TCCR2B> TCCR2B;
         constexpr LibAVR::AVRReg<ValueTCNT2, ADDR_TCNT2> TCNT2;
-        constexpr LibAVR::AVRReg<ValueOCR2A, ADDR_OCR2A> OCR2A;
-        constexpr LibAVR::AVRReg<ValueOCR2B, ADDR_OCR2B> OCR2B;
+        constexpr LibAVR::AVRReg<ValueOCR2, ADDR_OCR2A> OCR2A;
+        constexpr LibAVR::AVRReg<ValueOCR2, ADDR_OCR2B> OCR2B;
         constexpr LibAVR::AVRReg<ValueASSR, ADDR_ASSR> ASSR;
         constexpr LibAVR::AVRReg<ValueTWBR, ADDR_TWBR> TWBR;
         constexpr LibAVR::AVRReg<ValueTWSR, ADDR_TWSR> TWSR;
@@ -204,6 +218,17 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg<ValueUBRR0, ADDR_UBRR0L> UBRR0L;
         constexpr LibAVR::AVRReg<ValueUBRR0, ADDR_UBRR0H> UBRR0H;
         constexpr LibAVR::AVRReg<ValueUDR0, ADDR_UDR0> UDR0;
+    
+        // Define hardware IO 16-Bit composite registers
+    
+        constexpr LibAVR::AVRReg_16<ValueEEAR_16, ADDR_EEARL> EEAR_16;
+        constexpr LibAVR::AVRReg_16<ValueADC_16, ADDR_ADCL> ADC_16;
+        constexpr LibAVR::AVRReg_16<ValueTCNT1_16, ADDR_TCNT1L> TCNT1_16;
+        constexpr LibAVR::AVRReg_16<ValueICR1_16, ADDR_ICR1L> ICR1_16;
+        constexpr LibAVR::AVRReg_16<ValueOCR1_16, ADDR_OCR1AL> OCR1A_16;
+        constexpr LibAVR::AVRReg_16<ValueOCR1_16, ADDR_OCR1BL> OCR1B_16;
+        constexpr LibAVR::AVRReg_16<ValueUBRR0_16, ADRR_UBRR0L> UBRR0_16;
+    
     }
 }
 
@@ -327,8 +352,8 @@ constexpr auto SELFPRGEN = AVRIO::ValueSPMCSR(0);
 constexpr auto PGERS = AVRIO::ValueSPMCSR(1);
 constexpr auto PGWRT = AVRIO::ValueSPMCSR(2);
 constexpr auto BLBSET = AVRIO::ValueSPMCSR(3);
-constexpr auto RWWSRE = AVRIO::ValueSPMCSR(4);  // atmega88P/168P only
-constexpr auto RWWSB = AVRIO::ValueSPMCSR(6);   // atmega88P/168P only
+//constexpr auto RWWSRE = AVRIO::ValueSPMCSR(4);  // atmega88P/168P only
+//constexpr auto RWWSB = AVRIO::ValueSPMCSR(6);   // atmega88P/168P only
 constexpr auto SPMIE = AVRIO::ValueSPMCSR(7);
 
 constexpr auto SP0 = AVRIO::ValueSPL(0);
