@@ -105,6 +105,7 @@ namespace IODef {
 // Hardware modules possessed by atmega328p
 #define __HAVE_SPI__
 #define __HAVE_USART0__
+#define __HAVE_TIMER0_8BITS__
 
 
 #endif /* RS_m328p_h */
