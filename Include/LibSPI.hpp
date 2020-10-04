@@ -32,7 +32,7 @@ namespace LibSPI {
             static constexpr auto& _DR = AVRIO::SPDR;
             static constexpr auto& _SSDDR = AVRIO::DDRB;
             
-            typedef decltype(AVRIO::SPDR)::ValueType _DT;
+            typedef decltype(AVRIO::SPDR)::Value_Type _DT;
             
             static constexpr auto _SSPin = PB2;
 
