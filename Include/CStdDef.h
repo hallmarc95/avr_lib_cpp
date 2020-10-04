@@ -13,7 +13,8 @@
 
 namespace std {
 
-typedef  int16_t ptrdiff_t;
+typedef int16_t ptrdiff_t;
+typedef decltype(nullptr) nullptr_t;
 
 }
 
