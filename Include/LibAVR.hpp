@@ -25,9 +25,9 @@ namespace LibAVR {
     constexpr auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
         return reinterpret_cast<AddressType>(InAddress);
     };
-    constexpr auto _as_reg_16 = [] (RegisterAddress_16 const InAddress) -> AddressType_16 {
+    constexpr auto _as_reg_16 = [] (RegisterAddress const InAddress) -> AddressType_16 {
         return reinterpret_cast<AddressType_16>(InAddress);
-    }
+    };
     
     
     struct RegBits_Base {
@@ -46,7 +46,7 @@ namespace LibAVR {
         constexpr RegBits_16_Base operator ~() const { return ~Value; }
     private:
         RegisterValue_16 const Value;
-    }
+    };
     
     
     

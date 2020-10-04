@@ -227,7 +227,7 @@ namespace AVRIO {
         constexpr LibAVR::AVRReg_16<ValueICR1_16, ADDR_ICR1L> ICR1_16;
         constexpr LibAVR::AVRReg_16<ValueOCR1_16, ADDR_OCR1AL> OCR1A_16;
         constexpr LibAVR::AVRReg_16<ValueOCR1_16, ADDR_OCR1BL> OCR1B_16;
-        constexpr LibAVR::AVRReg_16<ValueUBRR0_16, ADRR_UBRR0L> UBRR0_16;
+        constexpr LibAVR::AVRReg_16<ValueUBRR0_16, ADDR_UBRR0L> UBRR0_16;
     
     }
 }
