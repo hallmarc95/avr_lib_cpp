@@ -52,7 +52,7 @@ namespace LibAVR {
     
     template <class T, RegisterAddress const A>
     struct AVRReg final {
-        typedef T ValueType;
+        typedef T Value_Type;
         static constexpr RegisterAddress Address = A;
         
         constexpr T operator =(T const InValue) const { return T((*_as_reg(A)) = InValue); }
