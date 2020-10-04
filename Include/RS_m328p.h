@@ -105,7 +105,9 @@ namespace IODef {
 // Guards for hardware modules possessed by atmega328p
 #define __HAVE_SPI__
 #define __HAVE_USART0__
-#define __HAVE_TIMER0_8BITS__
+#define __HAVE_TIMER0_8BITS_EXTCLK__
+#define __HAVE_TIMER1_16BITS_EXTCLK__
+#define __HAVE_TIMER2_8BITS__
 
 
 #endif /* RS_m328p_h */
