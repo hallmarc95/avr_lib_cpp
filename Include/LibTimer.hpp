@@ -328,7 +328,6 @@ namespace LibTimer {
             M::_CRB.WriteBit(M::_CS0, (Val & 0b001) != 0);
             M::_CRB.WriteBit(M::_CS1, (Val & 0b010) != 0);
             M::_CRB.WriteBit(M::_CS2, (Val & 0b100) != 0);
-            }
         }
         void SetPrescaler(TimerPrescaler const InScaler) const {
             static_assert(std::Is_Same<typename M::Prescaler_Type, TimerPrescaler>::Value, "Prescaler type 'LibTimer::TimerPrescaler' invalid for this module");
