@@ -273,76 +273,29 @@ namespace LibTimer {
             
             int const Value = static_cast<uint8_t const>(InMode);
             
-            if ((Value & 0b0001) != 0)
-                M::_CRA.SetBit(M::_WGM0);
-            else
-                M::_CRA.ClearBit(M::_WGM0);
-            
-            if ((Value & 0b0010) != 0)
-                M::_CRA.SetBit(M::_WGM1);
-            else
-                M::_CRA.ClearBit(M::_WGM1);
-            
-            if ((Value & 0b0100) != 0)
-                M::_CRB.SetBit(M::_WGM2);
-            else
-                M::_CRB.ClearBit(M::_WGM2);
-            
-            if ((Value & 0b1000) != 0)
-                M::_CRB.SetBit(M::_WGM3);
-            else
-                M::_CRB.ClearBit(M::_WGM3);
+            M::_CRA.WriteBit(M::_WGM0, (Value & 0b0001) != 0);
+            M::_CRA.WriteBit(M::_WGM1, (Value & 0b0010) != 0);
+            M::_CRB.WriteBit(M::_WGM2, (Value & 0b0100) != 0);
+            M::_CRB.WriteBit(M::_WGM3, (Value & 0b1000) != 0);
         }
         void SetOperationMode(TimerOperationMode const InMode) const {
             static_assert(std::Is_Same<typename M::WGM_Type, TimerOperationMode>::Value, "Operation type 'LibTimer::TimerOperationMode' invalid for this module");
             
             int const Value = static_cast<uint8_t const>(InMode);
             
-            if ((Value & 0b0001) != 0) {
-                M::_CRA.SetBit(M::_WGM0);
-            } else {
-                M::_CRA.ClearBit(M::_WGM0);
-            }
-            if ((Value & 0b0010) != 0){
-                M::_CRA.SetBit(M::_WGM1);
-            } else {
-                M::_CRA.ClearBit(M::_WGM1);
-            }
-            if ((Value & 0b0100) != 0){
-                M::_CRB.SetBit(M::_WGM2);
-            } else {
-                M::_CRB.ClearBit(M::_WGM2);
-            }
+            M::_CRA.WriteBit(M::_WGM0, (Value & 0b0001) != 0);
+            M::_CRA.WriteBit(M::_WGM1, (Value & 0b0010) != 0);
+            M::_CRB.WriteBit(M::_WGM2, (Value & 0b0100) != 0);
         }
         
         template <OCMModule OCM = OCMModule::A>
         void SetCompareMatchOutputMode(CompareOutputMode const InMode) const {
             constexpr auto COM0 = (OCM == OCMModule::A) ? M::_COMA0 : M::_COMB0;
             constexpr auto COM1 = (OCM == OCMModule::A) ? M::_COMA1 : M::_COMB1;
+            uint8_t const Val = static_cast<int const>(InMode);
             
-            switch (InMode) {
-                case CompareOutputMode::Disconnected: {
-                    M::_CRA.ClearBits(COM0, COM1);
-                    break;
-                }
-                case CompareOutputMode::Toggle: {
-                    M::_CRA.SetBit(COM0);
-                    M::_CRA.ClearBit(COM1);
-                    break;
-                }
-                case CompareOutputMode::Clear: {
-                    M::_CRA.ClearBit(COM0);
-                    M::_CRA.SetBit(COM1);
-                    break;
-                }
-                case CompareOutputMode::Set: {
-                    M::_CRA.SetBits(COM0, COM1);
-                    break;
-                }
-                default:
-                    break;
-            }
-            
+            M::_CRA.WriteBit(COM0, (Val & 0b01) != 0);
+            M::_CRA.WriteBit(COM1, (Val & 0b10) != 0);
         }
         
         template <OCMModule OCM = OCMModule::A>
@@ -370,126 +323,61 @@ namespace LibTimer {
         void SetPrescaler(TimerPrescaler_EXT const InScaler) const {
             static_assert(std::Is_Same<typename M::Prescaler_Type, TimerPrescaler_EXT>::Value, "Prescaler type 'LibTimer::TimerPrescaler_EXT' invalid for this module");
             
-            switch (InScaler) {
-                case TimerPrescaler_EXT::Disabled: {
-                    M::_CRB.ClearBits(M::_CS0, M::_CS1, M::_CS2);
-                    break;
-                }
-                case TimerPrescaler_EXT::OSCDiv_1: {
-                    M::_CRB.SetBits(M::_CS0);
-                    M::_CRB.ClearBits(M::_CS1, M::_CS2);
-                    break;
-                }
-                case TimerPrescaler_EXT::OSCDiv_8: {
-                    M::_CRB.SetBits(M::_CS1);
-                    M::_CRB.ClearBits(M::_CS0, M::_CS2);
-                    break;
-                }
-                case TimerPrescaler_EXT::OSCDiv_64: {
-                    M::_CRB.SetBits(M::_CS0, M::_CS1);
-                    M::_CRB.ClearBits(M::_CS2);
-                    break;
-                }
-                case TimerPrescaler_EXT::OSCDiv_256: {
-                    M::_CRB.SetBits(M::_CS2);
-                    M::_CRB.ClearBits(M::_CS0, M::_CS1);
-                    break;
-                }
-                case TimerPrescaler_EXT::OSCDiv_1024: {
-                    M::_CRB.SetBits(M::_CS2, M::_CS0);
-                    M::_CRB.ClearBits(M::_CS1);
-                    break;
-                }
-                case TimerPrescaler_EXT::EXTT0Falling: {
-                    M::_CRB.SetBits(M::_CS2, M::_CS1);
-                    M::_CRB.ClearBits(M::_CS0);
-                    break;
-                }
-                case TimerPrescaler_EXT::EXTT0Rising: {
-                    M::_CRB.SetBits(M::_CS2, M::_CS1, M::_CS0);
-                    break;
-                }
-                default:
-                    break;
+            uint8_t const Val = static_cast<int const>(InScaler);
+            
+            M::_CRB.WriteBit(M::_CS0, (Val & 0b001) != 0);
+            M::_CRB.WriteBit(M::_CS1, (Val & 0b010) != 0);
+            M::_CRB.WriteBit(M::_CS2, (Val & 0b100) != 0);
             }
         }
         void SetPrescaler(TimerPrescaler const InScaler) const {
             static_assert(std::Is_Same<typename M::Prescaler_Type, TimerPrescaler>::Value, "Prescaler type 'LibTimer::TimerPrescaler' invalid for this module");
             
-            uint8_t const Value = static_cast<uint8_t const>(InScaler);
-            
-            if ((Value & 0b001) != 0) {
-                M::_CRB.SetBit(M::_CS0);
-            } else {
-                M::_CRB.ClearBit(M::_CS0);
-            }
-            
-            if ((Value & 0b010) != 0) {
-                M::_CRB.SetBit(M::_CS1);
-            } else {
-                M::_CRB.ClearBit(M::_CS1);
-            }
-            
-            if ((Value & 0b100) != 0) {
-                M::_CRB.SetBit(M::_CS2);
-            } else {
-                M::_CRB.ClearBit(M::_CS2);
-            }
+            uint8_t const Val = static_cast<int const>(InScaler);
+
+            M::_CRB.WriteBit(M::_CS0, (Val & 0b001) != 0);
+            M::_CRB.WriteBit(M::_CS1, (Val & 0b010) != 0);
+            M::_CRB.WriteBit(M::_CS2, (Val & 0b100) != 0);
         }
         
         void SetInputCaptureEdge(ICEdge const InEdge) const {
             static_assert(std::Is_Same<typename M::_ICR, std::nullptr_t>::Value == false, "Timer module does not possess an Input Capture unit");
             
-            if (InEdge == ICEdge::Falling)
-                M::_CRB.ClearBit(M::_ICES);
-            else
-                M::_CRB.SetBit(M::_ICES);
+            M::_CRB.WriteBit(M::_ICES, InEdge == ICEdge::Rising);
         }
         
         
         void EnableInputCaptureNoiseCanceler(bool const Enable) const {
             static_assert(std::Is_Same<typename M::_ICR, std::nullptr_t>::Value == false, "Timer module does not possess an Input Capture unit");
-            
-            if (Enable == true)
-                M::_CRB.SetBit(M::_ICNC);
-            else
-                M::_CRB.ClearBit(M::_ICNC);
+
+            M::_CRB.WriteBit(M::_ICNC, Enable);
         }
         
         void EnableExtClk(bool const Enable) const {
             static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
             
-            if (Enable == true)
-                M::_ASY.SetBit(M::_EXCLK);
-            else
-                M::_ASY.ClearBit(M::_EXCLK);
+            M::_ASY.WriteBit(M::_EXCLK, Enable);
         }
         
         void EnableAsyncronousOperation(bool const Enable) const {
             static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
             
-            if (Enable == true)
-                M::_ASY.SetBit(M::_AS);
-            else
-                M::_ASY.ClearBit(M::_AS);
+            M::_ASY.WriteBit(M::_AS, Enable);
         }
         
         void EnableTimerSyncMode(bool const Enable) const {
-            if (Enable == true)
-                M::_GCR.SetBit(M::_TSM);
-            else
-                M::_GCR.ClearBit(M::_TSM);
+            M::_GCR.WriteBit(M::_TSM, Enable);
         }
         
         void EnableSyncPrescalerReset() const {
-            static_assert(std::Is_Same<_PRSYNC, std::nullptr_t>::Value == false, "Timer module does not support syncronous prescaler reset");
+            static_assert(std::Is_Same<typename M::_PRSYNC, std::nullptr_t>::Value == false, "Timer module does not support syncronous prescaler reset");
             
             M::_GCR.SetBit(M::_PRSYNC);
             // Cleared by hardware...
         }
         
         void EnableAsyncPrescalerReset() const {
-            static_assert(std::Is_Same<_PRASY, std::nullptr_t>::Value == false, "Timer module does not support asyncronous prescaler reset");
+            static_assert(std::Is_Same<typename M::_PRASY, std::nullptr_t>::Value == false, "Timer module does not support asyncronous prescaler reset");
             
             M::_GCR.SetBit(M::_PRASY);
             // Cleared by hardware...

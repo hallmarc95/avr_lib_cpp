@@ -204,84 +204,37 @@ namespace LibSPI {
         }
         
         
-        void SetSCKLeadingEdge(SCKEdge const EdgeDirection) const {
-            if (EdgeDirection == SCKEdge::Rising)
-                M::_CR.ClearBit(M::_CPOL);
-            else if (EdgeDirection == SCKEdge::Falling)
-                M::_CR.SetBit(M::_CPOL);
+        void SetSCKLeadingEdge(SCKEdge const InEdgeDirection) const {
+            M::_CR.WriteBit(M::_CPOL, InEdgeDirection == SCKEdge::Falling);
         }
         
-        void SetSamplePhase(SCKPhase const PhaseEdge) const {
-            if (PhaseEdge == SCKPhase::Leading)
-                M::_CR.ClearBit(M::_CPHA);
-            else if (PhaseEdge == SCKPhase::Trailing)
-                M::_CR.SetBit(M::_CPHA);
+        void SetSampleEdge(SCKPhase const InPhaseEdge) const {
+            M::_CR.WriteBit(M::_CPHA, InPhaseEdge == SCKPhase::Trailing);
         }
         
-        void SetTransferDirection(SPIDirection const TransferDirection) const {
-            if (TransferDirection == SPIDirection::LSBFirst)
-                M::_CR.ClearBit(M::_DORD);
-            else if (TransferDirection == SPIDirection::MSBFirst)
-                M::_CR.SetBit(M::_DORD);
+        void SetTransferDirection(SPIDirection const InTransferDirection) const {
+            M::_CR.WriteBit(M::_DORD, InTransferDirection == SPIDirection::MSBFirst);
         }
         
         void SetEnabled(bool const bEnable) const {
-            if (bEnable == true)
-                M::_CR.SetBit(M::_SPE);
-            else if (bEnable == false)
-                M::_CR.ClearBit(M::_SPE);
+            M::_CR.WriteBit(M::_SPE, bEnable);
         }
         
-        void SetClockRate(SCKPrescaler const Prescaler) const {
-            M::_CR.ClearBits(M::_SPR0, M::_SPR1);
-            M::_SR.ClearBits(M::_SPI2X);
+        void SetClockRate(SCKPrescaler const InPrescaler) const {
+            uint8_t const Val = static_cast<int const>(InPrescaler);
             
-            // Prescaler == SCKPrescaler::OSCDiv_16
-            // Prescaler == SCKPrescaler::OSCDiv_128
-            // Prescaler == SCKPrescaler::OSCDiv_2
-            // Prescaler == SCKPrescaler::OSCDiv_64_X
-            if ((int(Prescaler) & 0b001) == 1) {
-                M::_CR.SetBit(M::_SPR0);
-            } else {
-                M::_CR.ClearBit(M::_SPR0);
-            }
-            
-            // Prescaler == SCKPrescaler::OSCDiv_64
-            // Prescaler == SCKPrescaler::OSCDiv_128
-            // Prescaler == SCKPrescaler::OSCDiv_32
-            // Prescaler == SCKPrescaler::OSCDiv_64_X
-            if ((int(Prescaler) & 0b010) == 1) {
-                M::_CR.SetBit(M::_SPR1);
-            } else {
-                M::_CR.ClearBit(M::_SPR1);
-            }
-            
-            // Prescaler == SCKPrescaler::OSCDiv_2
-            // Prescaler == SCKPrescaler::OSCDiv_8
-            // Prescaler == SCKPrescaler::OSCDiv_32
-            // Prescaler == SCKPrescaler::OSCDiv_64_X
-            if ((int(Prescaler) & 0b100) == 1) {
-                M::_SR.SetBit(M::_SPI2X);
-            } else {
-                M::_SR.SetBit(M::_SPI2X);
-            }
+            M::_CR.WriteBit(M::_SPR0, (Val & 0b001) != 0);
+            M::_CR.WriteBit(M::_SPR1, (Val & 0b010) != 0);
+            M::_SR.WriteBit(M::_SPR2X, (Val & 0b100) != 0);
         }
         
         void SetTransactionCompleteInterruptEnable(bool const bEnable) const {
-            if (bEnable == true)
-                M::_CR.SetBit(M::_SPIE);
-            else
-                M::_CR.ClearBit(M::_SPIE);
+            M::_CR.WriteBit(M::_SPIE, bEnable);
         }
         
         void SetRole(SPIRole const InRole) const {
-            if (InRole == SPIRole::Master) {
-                M::_SSDDR.SetBit(M::_SSPin);
-                M::_CR.SetBit(M::_MSTR);
-            } else {
-                M::_SSDDR.ClearBit(M::_SSPin);
-                M::_CR.ClearBit(M::_MSTR);
-            }
+            M::_SSDDR.WriteBit(M::_SSPin, InRole == SPIRole::Master);
+            M::_CR.WriteBit(M::_MSTR, InRole == SPIRole::Master);
         }
         
         

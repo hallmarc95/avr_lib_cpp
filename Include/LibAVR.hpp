@@ -22,10 +22,10 @@ namespace LibAVR {
     
     
     // Reinterpretation of a numerical value as an address in memory
-    constexpr auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
+    /*constexpr*/ auto _as_reg = [] (RegisterAddress const InAddress) -> AddressType {
         return reinterpret_cast<AddressType>(InAddress);
     };
-    constexpr auto _as_reg_16 = [] (RegisterAddress const InAddress) -> AddressType_16 {
+    /*constexpr*/ auto _as_reg_16 = [] (RegisterAddress const InAddress) -> AddressType_16 {
         return reinterpret_cast<AddressType_16>(InAddress);
     };
     
@@ -71,6 +71,15 @@ namespace LibAVR {
         
         constexpr T ClearBit(T InBit) const {
             return T((*this) &= ~(1 << InBit));
+        }
+        
+        T WriteBit(T InBit, bool const bSet) const {
+            if (bSet == true)
+                SetBit(InBit);
+            else
+                ClearBit(InBit);
+            
+            return (*this);
         }
         
         // SetBits is overloaded for between 1 and 8 bit-index parameters
