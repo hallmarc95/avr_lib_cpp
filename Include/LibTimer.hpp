@@ -23,11 +23,11 @@ namespace LibTimer {
         Disabled = 0,
         OSCDiv_1 = 1,
         OSCDiv_8 = 2,
-        OSCDiv_64 = 3,
-        OSCDiv_256 = 4,
-        OSCDiv_1024 = 5,
-        EXTT0Falling = 6,
-        EXTT0Rising = 7
+        OSCDiv_32 = 3,
+        OSCDiv_64 = 4,
+        OSCDiv_128 = 5,
+        OSCDiv_256 = 6,
+        OSCDiv_1024 = 7
     };
     
     enum class TimerPrescaler_EXT {
@@ -97,8 +97,6 @@ namespace LibTimer {
             using TimerCount_Type = decltype(AVRIO::TCNT0)::Value_Type;
             using TIMSKValue_Type = decltype(AVRIO::TIMSK0)::Value_Type;
             
-            static constexpr bool bHasInputCapture = false;
-            
             static constexpr auto& _CRA = AVRIO::TCCR0A;
             static constexpr auto& _CRB = AVRIO::TCCR0B;
             static constexpr auto& _CNT = AVRIO::TCNT0;
@@ -106,6 +104,9 @@ namespace LibTimer {
             static constexpr auto& _OCB = AVRIO::OCR0B;
             static constexpr auto& _IM = AVRIO::TIMSK0;
             static constexpr auto& _IF = AVRIO::TIFR0;
+            static constexpr auto _ICR = nullptr;
+            static constexpr auto _ASY = nullptr;
+            static constexpr auto& _GCR = AVRIO::GTCCR;
             
             static constexpr auto& _FOC_R = AVRIO::TCCR0B;
             
@@ -117,6 +118,7 @@ namespace LibTimer {
             static constexpr auto _WGM1 = WGM01;
             
             static constexpr auto _WGM2 = WGM02;
+            static constexpr auto _WGM3 = nullptr;
             static constexpr auto _CS0 = CS00;
             static constexpr auto _CS1 = CS01;
             static constexpr auto _CS2 = CS02;
@@ -127,7 +129,17 @@ namespace LibTimer {
             static constexpr auto _OCIB = OCIE0B;
             static constexpr auto _TOI = TOIE0;
             
-            static constexpr std::nullptr_t _WGM3 = nullptr;
+            static constexpr auto _EXCLK = nullptr;
+            static constexpr auto _AS = nullptr;
+            static constexpr auto _CNTUB = nullptr;
+            static constexpr auto _OCAUB = nullptr;
+            static constexpr auto _OCBUB = nullptr;
+            static constexpr auto _CRAUB = nullptr;
+            static constexpr auto _CRBUB = nullptr;
+            
+            static constexpr auto _TSM = TSM;
+            static constexpr auto _PRASY = nullptr;
+            static constexpr auto _PRSYNC = PSRSYNC;
         };
 #endif /* __HAVE_TIMER0_8BITS__*/
         
@@ -140,8 +152,6 @@ namespace LibTimer {
             using TimerCount_Type = decltype(AVRIO::TCNT1_16)::Value_Type;
             using TIMSKValue_Type = decltype(AVRIO::TIMSK1)::Value_Type;
             
-            static constexpr bool bHasInputCapture = true;
-            
             static constexpr auto& _CRA = AVRIO::TCCR1A;
             static constexpr auto& _CRB = AVRIO::TCCR1B;
             static constexpr auto& _CRC = AVRIO::TCCR1C;
@@ -150,6 +160,9 @@ namespace LibTimer {
             static constexpr auto& _OCB = AVRIO::OCR1B_16;
             static constexpr auto& _IM = AVRIO::TIMSK1;
             static constexpr auto& _IF = AVRIO::TIFR1;
+            static constexpr auto& _ICR = AVRIO::ICR1_16;
+            static constexpr auto _ASY = nullptr;
+            static constexpr auto& _GCR = AVRIO::GTCCR;
             
             static constexpr auto& _FOC_R = AVRIO::TCCR1C;
             
@@ -175,10 +188,22 @@ namespace LibTimer {
             static constexpr auto _OCIB = OCIE1B;
             static constexpr auto _TOI = TOIE1;
             static constexpr auto _ICI = ICIE1;
+            
+            static constexpr auto _EXCLK = nullptr;
+            static constexpr auto _AS = nullptr;
+            static constexpr auto _CNTUB = nullptr;
+            static constexpr auto _OCAUB = nullptr;
+            static constexpr auto _OCBUB = nullptr;
+            static constexpr auto _CRAUB = nullptr;
+            static constexpr auto _CRBUB = nullptr;
+            
+            static constexpr auto _TSM = TSM;
+            static constexpr auto _PRASY = nullptr;
+            static constexpr auto _PRSYNC = PSRSYNC;
         };
 #endif /* __HAVE_TIMER1_16BITS_EXTCLK__ */
         
-#ifdef __HAVE_TIMER2_8BITS__
+#ifdef __HAVE_TIMER2_8BITS_ASY__
         struct Timer2 final {
             using WGM_Type = TimerOperationMode;
             using Prescaler_Type = TimerPrescaler;
@@ -187,8 +212,6 @@ namespace LibTimer {
             using TimerCount_Type = decltype(AVRIO::TCNT2)::Value_Type;
             using TIMSKValue_Type = decltype(AVRIO::TIMSK2)::Value_Type;
             
-            static constexpr bool bHasInputCapture = false;
-            
             static constexpr auto& _CRA = AVRIO::TCCR2A;
             static constexpr auto& _CRB = AVRIO::TCCR2B;
             static constexpr auto& _CNT = AVRIO::TCNT2;
@@ -196,6 +219,9 @@ namespace LibTimer {
             static constexpr auto& _OCB = AVRIO::OCR2B;
             static constexpr auto& _IM = AVRIO::TIMSK2;
             static constexpr auto& _IF = AVRIO::TIFR2;
+            static constexpr auto _ICR = nullptr;
+            static constexpr auto& _ASY = AVRIO::ASSR;
+            static constexpr auto _GCR = AVRIO::GTCCR;
             
             static constexpr auto& _FOC_R = AVRIO::TCCR2B;
             
@@ -207,6 +233,7 @@ namespace LibTimer {
             static constexpr auto _WGM1 = WGM21;
             
             static constexpr auto _WGM2 = WGM22;
+            static constexpr auto _WGM3 = nullptr;
             static constexpr auto _CS0 = CS20;
             static constexpr auto _CS1 = CS21;
             static constexpr auto _CS2 = CS22;
@@ -217,9 +244,19 @@ namespace LibTimer {
             static constexpr auto _OCIB = OCIE2B;
             static constexpr auto _TOI = TOIE2;
             
-            static constexpr std::nullptr_t _WGM3 = nullptr;
+            static constexpr auto _EXCLK = EXCLK;
+            static constexpr auto _AS = AS2;
+            static constexpr auto _CNTUB = TCN2UB;
+            static constexpr auto _OCAUB = OCR2AUB;
+            static constexpr auto _OCBUB = OCR2BUB;
+            static constexpr auto _CRAUB = TCR2AUB;
+            static constexpr auto _CRBUB = TCR2AUB;
+            
+            static constexpr auto _TSM = TSM;
+            static constexpr auto _PRASY = PSRASY;
+            static constexpr auto _PRSYNC = nullptr;
         };
-#endif /* __HAVE_TIMER2_8BITS__ */
+#endif /* __HAVE_TIMER2_8BITS_ASY__ */
         
     } /* -- Modules */
     
@@ -229,7 +266,7 @@ namespace LibTimer {
     public:
         Timer() = default;
         Timer(Timer&) = delete;
-        Timer(Timer&&) = delete;
+        
         
         void SetOperationMode(TimerOperationModeExtended const InMode) const {
             static_assert(std::Is_Same<typename M::WGM_Type, TimerOperationModeExtended>::Value, "Operation type 'LibTimer::TimerOperationModeExtended' invalid for this module");
@@ -401,7 +438,7 @@ namespace LibTimer {
         }
         
         void SetInputCaptureEdge(ICEdge const InEdge) const {
-            static_assert(M::bHasInputCapture == true, "Timer module does not possess an Input Capture unit");
+            static_assert(std::Is_Same<typename M::_ICR, std::nullptr_t>::Value == false, "Timer module does not possess an Input Capture unit");
             
             if (InEdge == ICEdge::Falling)
                 M::_CRB.ClearBit(M::_ICES);
@@ -409,6 +446,54 @@ namespace LibTimer {
                 M::_CRB.SetBit(M::_ICES);
         }
         
+        
+        void EnableInputCaptureNoiseCanceler(bool const Enable) const {
+            static_assert(std::Is_Same<typename M::_ICR, std::nullptr_t>::Value == false, "Timer module does not possess an Input Capture unit");
+            
+            if (Enable == true)
+                M::_CRB.SetBit(M::_ICNC);
+            else
+                M::_CRB.ClearBit(M::_ICNC);
+        }
+        
+        void EnableExtClk(bool const Enable) const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
+            
+            if (Enable == true)
+                M::_ASY.SetBit(M::_EXCLK);
+            else
+                M::_ASY.ClearBit(M::_EXCLK);
+        }
+        
+        void EnableAsyncronousOperation(bool const Enable) const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
+            
+            if (Enable == true)
+                M::_ASY.SetBit(M::_AS);
+            else
+                M::_ASY.ClearBit(M::_AS);
+        }
+        
+        void EnableTimerSyncMode(bool const Enable) const {
+            if (Enable == true)
+                M::_GCR.SetBit(M::_TSM);
+            else
+                M::_GCR.ClearBit(M::_TSM);
+        }
+        
+        void EnableSyncPrescalerReset() const {
+            static_assert(std::Is_Same<_PRSYNC, std::nullptr_t>::Value == false, "Timer module does not support syncronous prescaler reset");
+            
+            M::_GCR.SetBit(M::_PRSYNC);
+            // Cleared by hardware...
+        }
+        
+        void EnableAsyncPrescalerReset() const {
+            static_assert(std::Is_Same<_PRASY, std::nullptr_t>::Value == false, "Timer module does not support asyncronous prescaler reset");
+            
+            M::_GCR.SetBit(M::_PRASY);
+            // Cleared by hardware...
+        }
         
         template <typename... Bits>
         void EnableInterrupts(Bits... InBits) const {
@@ -420,13 +505,32 @@ namespace LibTimer {
             M::_IM.ClearBits(InBits...);
         }
         
-        void EnableInputCaptureNoiseCanceler(bool const Enable) const {
-            static_assert(M::bHasInputCapture == true, "Timer module does not possess an Input Capture unit");
+        
+        bool IsCountUpdateBusy() const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
             
-            if (Enable == true)
-                M::_CRB.SetBit(M::_ICNC);
-            else
-                M::_CRB.ClearBit(M::_ICNC);
+            return M::_ASY.IsBitSet(M::_CNTUB);
+        }
+        
+        template <OCMModule OCM = OCMModule::A>
+        bool IsOutputCompareUpdateBusy() const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
+            
+            constexpr auto Bit = (OCM == OCMModule::A) ? M::_OCAUB : M::_OCBUB;
+            
+            return M::_ASY.IsBitSet(Bit);
+        }
+        
+        bool IsControlRegisterAUpdateBusy() const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
+            
+            return M::_ASY.IsBitSet(M::_CRAUB);
+        }
+        
+        bool IsControlRegisterBUpdateBusy() const {
+            static_assert(std::Is_Same<typename M::_ASY, std::nullptr_t>::Value, "Timer module does not support ayncronous operation");
+            
+            return M::_ASY.IsBitSet(M::_CRBUB);
         }
         
         
